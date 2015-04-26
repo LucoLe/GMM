@@ -1,0 +1,10 @@
+<div class="row">
+  <h1>Edit: <%= "#{@member.first_name} #{@member.last_name}" %></h1>
+</div>
+
+<div class="row">
+  <%= render 'form' %>
+  <%= link_to "Delete my account", registration_path(@member),
+                    :data => { :confirm => "Are you sure?" },
+                    :method => :delete, class: 'btn btn-danger' %>
+</div>

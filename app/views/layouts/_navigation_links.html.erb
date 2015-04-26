@@ -1,0 +1,16 @@
+<%# add navigation links to this file %>
+<p class="navbar-text">
+  <li><%= link_to "Clubs", clubs_path, class: 'navbar-link' %></li>
+  <li><%= link_to "Members", members_path, class: 'navbar-link' %></li>
+  <% if (app_user == "club_owner" and !current_club_owner.club) %>
+    <li><%= link_to "Create club", new_club_path, class: 'navbar-link' %></li>
+  <% end %>
+  <% if (app_user == "club_owner" and current_club_owner.club) %>
+        <li><%= link_to "Show club", club_path(current_club_owner), class: 'navbar-link' %></li>
+    </p>
+  <% end %>
+  <% if app_user == "member" %>
+        <li><%= link_to "Profile", member_path(current_member),
+                          class: 'navbar-link' %></li>
+  <% end %>
+</p>

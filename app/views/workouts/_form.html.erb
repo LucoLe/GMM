@@ -1,0 +1,45 @@
+<%= form_for(@workout) do |f| %>
+
+  <% if @workout.errors.any? %>
+    <div class="alert alert-danger" >
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <% @workout.errors.full_messages.each do |message| %>
+        <ul>
+            <li><%= content_tag :div, message %></li>
+        </ul>
+      <% end %>
+    </div>
+  <% end %>
+
+
+  <div class="row">
+    <div class="form-group col-md-8">
+      <%= f.label :title %>
+      <%= f.text_field :title, :autofocus => true,
+                        class: 'form-control' %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-md-8">
+      <%= f.label :description %>
+      <%= f.text_area :description, class: 'form-control' %>
+    </div>
+  </div>
+
+  <% if app_user == "member" %>
+    <%= f.hidden_field :member_id, value: current_member.id %>
+  <% end %>
+  <% if app_user == "club_owner" %>
+    <%= f.hidden_field :club_id, value: current_club_owner.club.id %>
+  <% end %>
+  <p>
+    <%= f.submit class: 'btn btn-primary' %>
+    <% if params[:action] == "edit" %>
+      <% if app_user == "member" %>
+        <%= link_to "Back", member_path(current_member), class: "btn btn-default" %>
+      <% else %>
+        <%= link_to "Back", club_path(current_club_owner.club), class: "btn btn-default" %>
+      <% end %>
+    <% end %>
+  </p>
+<% end %>

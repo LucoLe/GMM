@@ -1,0 +1,75 @@
+<div class="row">
+  <h2><%= @club.name %> </h2>
+  <% if @subscriptions.any? %>
+    <p>
+      <%= "Subscribtion".pluralize(@subscriptions.length) %>
+      <span class="badge"><%= @subscriptions.length %></span>
+    </p>
+  <% end %>
+
+</div>
+<address>
+  <%= @club.address %><br>
+  <%= @club.postal_code %> <%= @club.city %>, <%= @country %><br>
+  Phone: <%= @club.phone_number %><br>
+</address>
+
+
+<div class="row">
+  <% if (current_club_owner && @club.club_owner_id == current_club_owner.id) %>
+    <%= link_to "Edit", edit_club_path, class: 'btn btn-primary' %>
+    <%= link_to "Delete", club_path, method: :delete,
+                data: {confirm: 'Are you sure?'}, class: 'btn btn-danger' %>
+  <% end %>
+
+  <% if app_user == "member" %>
+    <% if @subscription %>
+      <%= link_to "Unsubscribe", @subscription,
+                  :data => { :confirm => "Are you sure?" },
+                  :method => :delete, class: 'btn btn-danger' %>
+    <% else %>
+      <%= form_for(current_member.subscriptions.build) do |f| %>
+        <%= f.hidden_field :club_id, value: params[:id].to_i %>
+        <%= f.hidden_field :member_id, value: current_member.id %>
+        <%= f.submit "Subscribe", class: 'btn btn-primary' %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <%= render "workouts/show", user: @club, current_user: current_club_owner %>
+
+  <% if @subscriptions.any? %>
+    <p>
+      <div class="panel panel-default">
+        <div class="panel-heading">Subscribers</div>
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Subscriber name</th>
+                  <% if (current_club_owner && @club.club_owner_id == current_club_owner.id) %>
+                    <th></th>
+                  <% end %>
+                </tr>
+              </thead>
+              <tbody>
+                <% @subscriptions.each do |subscription| %>
+                  <tr>
+                    <td><%= link_to "#{subscription.member.first_name} #{subscription.member.last_name}",
+                                member_path(subscription.member_id) %></td>
+                    <% if (current_club_owner && @club.club_owner_id == current_club_owner.id) %>
+                      <td><%= link_to "Remove", subscription_path(subscription.id), :data => { :confirm => "Are you sure?" },
+                           :method => :delete %></td>
+                    <% end %>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </p>
+
+  <% end %>
+</div>

@@ -1,0 +1,63 @@
+<%= form_for(@club) do |f| %>
+
+    <% if @club.errors.any? %>
+      <div class="alert alert-danger" >
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <% @club.errors.full_messages.each do |message| %>
+          <ul>
+              <li><%= content_tag :div, message %></li>
+          </ul>
+        <% end %>
+      </div>
+    <% end %>
+
+    <div class="row">
+      <div class="form-group col-md-8">
+        <%= f.label :name %>
+        <%= f.text_field :name, :autofocus => true, class: 'form-control' %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-3">
+          <%= f.label :country %>
+          <%= f.country_select :country, { priority_countries: ["DE", "GB", "US"], include_blank: true }, class: 'form-control' %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-3">
+        <%= f.label :city %>
+        <%= f.text_field :city, class: 'form-control' %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-8">
+        <%= f.label :address %>
+        <%= f.text_field :address, class: 'form-control' %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-2">
+        <%= f.label :postal_code %>
+        <%= f.text_field :postal_code, class: 'form-control' %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-3">
+        <%= f.label :phone_number %>
+        <%= f.telephone_field :phone_number, class: 'form-control' %>
+      </div>
+    </div>
+    <% if params[:action] == "edit" %>
+      <p>
+        <%= link_to "Change password", edit_club_owner_registration_path
+                                     %>
+      </p>
+    <% end %>
+
+    <%= f.hidden_field :club_owner_id %>
+    <p>
+      <%= f.submit class: 'btn btn-primary' %>
+      <%= link_to "Back", clubs_path, class: "btn btn-default" %>
+    </p>
+
+<% end %>

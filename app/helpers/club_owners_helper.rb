@@ -1,0 +1,2 @@
+module ClubOwnersHelper
+end

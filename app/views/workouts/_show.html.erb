@@ -1,0 +1,71 @@
+<% if user.workouts.any? or params[:id].to_i == current_user.id %>
+  <p>
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading">Workouts</div>
+      <ul class="list-group">
+        <% if (current_user and (params[:id].to_i == current_user.id)) %>
+          <li class="list-group-item">
+            <%= render "workouts/form" %>
+          </li>
+        <% end %>
+        <% if user.workouts.any? %>
+          <li class="list-group-item">
+            <div role="tabpanel">
+              <!-- Nav tabs -->
+              <ul class="nav nav-pills" role="tablist">
+                <% user.workouts.each do |workout| %>
+                  <li role="presentation">
+                    <a href="#tab<%= workout.id %>" class="btn btn-default"
+                       aria-controls="<%= workout.title %>" role="tab" data-toggle="pill"><%= workout.title %></a>
+                  </li>
+                <% end %>
+              </ul>
+              <!-- Tab panes -->
+              <div class="tab-content">
+                <% user.workouts.each do |workout| %>
+                  <div role="tabpanel" class="tab-pane"
+                     id="tab<%= workout.id %>">
+                    <p>
+                      <dl class="dl-horizontal">
+                        <dt>Title:</dt>
+                        <dd><%= workout.title %></dd>
+                        <dt>Description:</dt>
+                        <dd><%= workout.description %></dd>
+                      </dl>
+                    </p>
+                    <p>
+                      <%= link_to "Edit Workout", edit_workout_path(workout),class: 'btn btn-primary' %>
+                      <%= link_to "Delete Workout", workout_path(workout),
+                                :data => { :confirm => "Are you sure?" },
+                                :method => :delete, class: 'btn btn-danger' %>
+                      <% if app_user == "member" and @subscription %>
+                        <% if workout.member_id == current_member.id %>
+                          <%= link_to "Unsubscribe", workout,
+                                      :data => { :confirm => "Are you sure?" },
+                                      :method => :delete, class: 'btn btn-danger' %>
+                        <% else %>
+                          <%= form_for(current_member.workouts.build) do |f| %>
+                            <%= f.hidden_field :title, value: workout.title %>
+                            <%= f.hidden_field :description,
+                                          value: workout.description %>
+                            <%= f.hidden_field :club_id,
+                                          value: workout.club_id %>
+                            <%= f.hidden_field :member_id,
+                                          value: current_member.id %>
+                            <%= f.submit "Subscribe", class: 'btn btn-primary' %>
+                          <% end %>
+                        <% end %>
+                      <% end %>
+                    </p>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </p>
+<% end %>
+

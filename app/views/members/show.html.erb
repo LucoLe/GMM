@@ -1,0 +1,47 @@
+<div class="row"><h2><%= "#{@member.first_name} #{@member.last_name}" %></h2></div>
+<p><%= @member.birthdate %></p>
+<p><%= @member.email %></p>
+
+<div class="row">
+  <% if (current_member && (params[:id].to_i == current_member.id)) %>
+      <%= link_to "Edit", edit_member_path(@member),
+                          class: 'btn btn-primary' %>
+  <% end %>
+
+  <%= render "workouts/show", user: @member, current_user: current_member %>
+
+  <% if @member.subscriptions.any? %>
+  <p>
+    <div class="panel panel-default">
+      <div class="panel-heading">Subscribtions</div>
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Club name</th>
+                <% if (current_member && (params[:id].to_i == current_member.id)) %>
+                  <th></th>
+                <% end %>
+              </tr>
+            </thead>
+            <tbody>
+              <% @member.subscriptions.each do |subscription| %>
+                <tr>
+                  <td><%= link_to "#{subscription.club.name}",
+                              club_path(subscription.club_id) %></td>
+                  <% if (current_member && (params[:id].to_i == current_member.id)) %>
+                    <td><%= link_to "Remove", subscription_path(subscription.id), :data => { :confirm => "Are you sure?" },
+                       :method => :delete %></td>
+                  <% end %>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </p>
+  <% end %>
+</div>
+

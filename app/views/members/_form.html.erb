@@ -1,0 +1,44 @@
+<%= form_for(@member) do |f| %>
+
+    <% if @member.errors.any? %>
+      <div class="alert alert-danger" >
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <% @member.errors.full_messages.each do |message| %>
+          <ul>
+              <li><%= content_tag :div, message %></li>
+          </ul>
+        <% end %>
+      </div>
+    <% end %>
+
+    <div class="row">
+      <div class="form-group col-md-8">
+        <%= f.label :first_name %>
+        <%= f.text_field :first_name, :autofocus => true, class: 'form-control' %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-8">
+        <%= f.label :last_name %>
+        <%= f.text_field :last_name, class: 'form-control' %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-8">
+        <%= f.label :birthdate %>
+        <%= f.date_field :birthdate, class: 'form-control' %>
+      </div>
+    </div>
+    <% if params[:action] == "edit" %>
+      <p>
+        <%= link_to "Change password",
+                      edit_member_registration_path(@member.id) %>
+      </p>
+    <% end %>
+
+    <p>
+      <%= f.submit class: 'btn btn-primary' %>
+      <%= link_to "Back", member_path(@member), class: "btn btn-default" %>
+    </p>
+
+<% end %>
