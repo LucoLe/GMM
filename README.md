@@ -1,25 +1,23 @@
 # Assignment
 
-[*Deployed Application*](#)
-
 In this sample app I am developing a simple Gym Membership Management system allowing the following use cases:
 
 It should allow users to create accounts. A user should be able to sign up either as a **member** or as a **club owner**; they should provide a valid email in order to be able to sign up.
 
 Owners should be able to:
-  *Create only one _Club_
-  *Fill in their Club profile: Name (mandatory), Address.
-  *View list of affiliated members to their club.
-  *Remove members for their club.
-  *Create _Workouts_ for their Club.
+* Create only one _Club_
+* Fill in their Club profile: Name (mandatory), Address.
+* View list of affiliated members to their club.
+* Remove members for their club.
+* Create _Workouts_ for their Club.
 
 Workouts are entities that have a title (mandatory), ex. “Back Shoulder workout”
 
 Members should be able to:
-  *Fill in their profiles with last name, first name, birth date
-  *Select their affiliation club from list of existing clubs (mandatory)
-  *Update their profile
-  *Create and join their own workout OR join an existing workout from the club they are affiliated with.
+* Fill in their profiles with last name, first name, birth date
+* Select their affiliation club from list of existing clubs (mandatory)
+* Update their profile
+* Create and join their own workout OR join an existing workout from the club they are affiliated with.
 
 # Comments
 
