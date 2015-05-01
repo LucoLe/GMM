@@ -1,5 +1,7 @@
 # Assignment
 
+You can find the deployed application [here](https://sample-gmm.herokuapp.com/)
+
 In this sample app I am developing a simple Gym Membership Management system allowing the following use cases:
 
 It should allow users to create accounts. A user should be able to sign up either as a **member** or as a **club owner**; they should provide a valid email in order to be able to sign up.
