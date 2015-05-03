@@ -11,8 +11,8 @@ class ClubsController < ApplicationController
     @club = Club.find(params[:id])
     @country = country_name(@club.country)
     if app_user == "member"
-      @subscription = Subscription.find_by(club_id: params[:id].to_i,
-                                           member_id: current_member.id)
+      @subscription = @club.subscriptions.find_by(member_id: current_member.id)
+      @subscription ||= Subscription.new
     elsif app_user == "club_owner"
       @workout = current_club_owner.club.workouts.build
     end

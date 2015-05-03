@@ -14,7 +14,6 @@
   Phone: <%= @club.phone_number %><br>
 </address>
 
-
 <div class="row">
   <% if (current_club_owner && @club.club_owner_id == current_club_owner.id) %>
     <%= link_to "Edit", edit_club_path, class: 'btn btn-primary' %>
@@ -23,14 +22,13 @@
   <% end %>
 
   <% if app_user == "member" %>
-    <% if @subscription %>
+    <% if @subscription.persisted? %>
       <%= link_to "Unsubscribe", @subscription,
                   :data => { :confirm => "Are you sure?" },
                   :method => :delete, class: 'btn btn-danger' %>
     <% else %>
-      <%= form_for(current_member.subscriptions.build) do |f| %>
+      <%= form_for(@subscription) do |f| %>
         <%= f.hidden_field :club_id, value: params[:id].to_i %>
-        <%= f.hidden_field :member_id, value: current_member.id %>
         <%= f.submit "Subscribe", class: 'btn btn-primary' %>
       <% end %>
     <% end %>
